@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color:#fbe4de
+            ;
+
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            border: 3px solid black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.909);
+        }
+        .section {
+            flex: 1;
+            padding: 20px;
+        }
+        .divider {
+            width: 3px;
+            background: black;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        .try-link {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 20px;
+            animation: zoomInOut 2s infinite;
+        }
+        @keyframes zoomInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section">
+            <h2>Amazon</h2>
+            <p><strong>Name:</strong> {{ amazon.title }}</p>
+            <p><strong>Price:</strong> {{ amazon.price }}</p>
+            <p><strong>Rating:</strong> {{ amazon.rating }}</p>
+            <a href="{{ amazon.url }}" class="product-link" target="_blank">View on Amazon</a>
+        </div>
+        <div class="divider"></div>
+        <div class="section">
+            <h2>Flipkart</h2>
+            <p><strong>Name:</strong> {{ flipkart.name }}</p>
+            <p><strong>Price:</strong> {{ flipkart.price }}</p>
+            <p><strong>Rating:</strong> {{ flipkart.rating }}</p>
+            <a href="{{ flipkart.url }}" class="product-link" target="_blank">View on Flipkart</a>
+        </div>
+    </div>
+
+    <!-- Dynamic Try Link with Zooming Effect -->
+    <div class="try-link" id="try-link"></div>
+
+    <script>
+        // Sample data coming from the server-side
+        const minPriceStore = "{{ store }}";  // 'amazon' or 'flipkart'
+        const minPriceUrl = "{{ url }}";  // Link to the store page
+
+        // Set the try-link based on the minimum price store
+        const tryLinkElement = document.getElementById('try-link');
+        if (minPriceStore === 'amazon') {
+            tryLinkElement.textContent = "Try it on Amazon";
+        } else if (minPriceStore === 'flipkart') {
+            tryLinkElement.textContent = "Try it on Flipkart";
+        }
+
+        // Redirect to the respective store when clicking the text
+        tryLinkElement.addEventListener('click', function() {
+            window.location.href = minPriceUrl;
+        });
+    </script>
+</body>
+</html>
